@@ -445,6 +445,7 @@ chrome.cast = {
 		  this.streamType = chrome.cast.media.StreamType.BUFFERED;
 		  this.contentType = contentType;
 		  this.customData = this.duration = this.metadata = null;
+		  this.metadata = new chrome.cast.media.GenericMediaMetadata(); 
 		}
 	}
 };
