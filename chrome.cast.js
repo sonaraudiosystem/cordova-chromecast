@@ -520,6 +520,8 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 	}
 
 	execute('requestSession', function(err, obj) {
+		console.log('[Cast API]', 'Session request', obj);
+		
 		if (!err) {
 			var sessionId = obj.sessionId;
 			var appId = obj.appId;
@@ -1055,8 +1057,9 @@ chrome.cast.connectToId = function(id) {
 	}
 
 	execute('selectRoute', id, function(err, obj) {
+	    console.log('[Cast API]', 'Trying to selectRoute', obj);
 		
-	if(!err && obj.sessionId) {
+	    if(!err && obj.sessionId) {
 		var sessionId = obj.sessionId;
 		var appId = obj.appId;
 		var displayName = obj.displayName;
@@ -1115,15 +1118,21 @@ chrome.cast._emitConnecting = function() {
 
 chrome.cast._ = {
 	receiverUnavailable: function() {
+		console.log('[Cast API]', 'Receiver unavailable');
+		
 		_receiverListener(chrome.cast.ReceiverAvailability.UNAVAILABLE);
 		_receiverAvailable = false;
 	},
 	receiverAvailable: function() {
+		console.log('[Cast API]', 'Receiver available');
+		
 		_receiverListener(chrome.cast.ReceiverAvailability.AVAILABLE);
 		_receiverAvailable = true;
 	},
 	routeAdded: function(route) {
 		if (!_routeList[route.id]) {
+			console.log('[Cast API]', 'Route added', route);
+			
 			route.el = createRouteElement(route);
 			_routeList[route.id] = route;
 
@@ -1132,17 +1141,23 @@ chrome.cast._ = {
 	},
 	routeRemoved: function(route) {
 		if (_routeList[route.id]) {
+			console.log('[Cast API]', 'Route removed', route);
+			
 			_routeList[route.id].el.remove();
 			delete _routeList[route.id];
 		}
 	},
 	sessionUpdated: function(isAlive, session) {
 		if (session && session.sessionId && _sessions[session.sessionId]) {
+			console.log('[Cast API]', 'Session updated', isAlive, session);
+			
 			_sessions[session.sessionId]._update(isAlive, session);
 		}
 	},
 	mediaUpdated: function(isAlive, media) {
 		if(media && media.mediaSessionId !== undefined) {
+			console.log('[Cast API]', 'Media updated', isAlive, media);
+			
 			if(!_currentMedia)
 				return this.mediaLoaded(isAlive, media);
 			else
@@ -1150,12 +1165,15 @@ chrome.cast._ = {
 		}
 	},
 	mediaLoaded: function(isAlive, media) {
+		console.log('[Cast API]', 'Media loaded', isAlive, media);
+		
 		if (_sessions[media.sessionId]) {
 
-            if (!_currentMedia)
-            {
-                _currentMedia = new chrome.cast.media.Media(media.sessionId, media.mediaSessionId);
-            }
+			if (!_currentMedia)
+		    	{
+				_currentMedia = new chrome.cast.media.Media(media.sessionId, media.mediaSessionId);
+		    	}
+			
 			_currentMedia._update(isAlive, media);
 			_sessions[media.sessionId].emit('_mediaListener', _currentMedia);
 		} else {
@@ -1163,6 +1181,8 @@ chrome.cast._ = {
 		}
 	},
 	sessionJoined: function(obj) {
+		console.log('[Cast API]', 'Session joined', obj);
+		
 		var sessionId = obj.sessionId;
 		var appId = obj.appId;
 		var displayName = obj.displayName;
@@ -1171,14 +1191,14 @@ chrome.cast._ = {
 
 		var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
 
-        if (obj.media && obj.media.sessionId)
-        {
-            _currentMedia = new chrome.cast.media.Media(sessionId, obj.media.mediaSessionId);
-            _currentMedia.currentTime = obj.media.currentTime;
-            _currentMedia.playerState = obj.media.playerState;
-            _currentMedia.media = obj.media.media;
-            session.media[0] = _currentMedia;
-        }
+		if (obj.media && obj.media.sessionId)
+		{
+		    _currentMedia = new chrome.cast.media.Media(sessionId, obj.media.mediaSessionId);
+		    _currentMedia.currentTime = obj.media.currentTime;
+		    _currentMedia.playerState = obj.media.playerState;
+		    _currentMedia.media = obj.media.media;
+		    session.media[0] = _currentMedia;
+		}
 
 		_sessionListener && _sessionListener(session);
 	},
