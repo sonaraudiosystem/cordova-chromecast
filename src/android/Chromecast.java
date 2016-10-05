@@ -173,7 +173,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 						.addControlCategory(CastMediaControlIntent.categoryForCast(appId))
 						.build();
 				mMediaRouterCallback.registerCallbacks(that);
-				mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_PERFORM_ACTIVE_SCAN);
+				mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
 				callbackContext.success();
 
 				Chromecast.this.checkReceiverAvailable();
