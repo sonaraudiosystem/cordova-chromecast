@@ -1050,41 +1050,41 @@ function onRouteClick() {
 
 chrome.cast.connectToId = function(id) {
     return new Promise(function (resolve, reject) {
-	try {
-		chrome.cast._emitConnecting();
-	} catch(e) {
-		console.error('Error in connectingListener', e);
-	}
+		try {
+			chrome.cast._emitConnecting();
+		} catch(e) {
+			console.error('Error in connectingListener', e);
+		}
 
-	execute('selectRoute', id, function(err, obj) {
-	    console.log('[Cast API]', 'Trying to selectRoute', obj);
-		
-	    if(!err && obj.sessionId) {
-		var sessionId = obj.sessionId;
-		var appId = obj.appId;
-		var displayName = obj.displayName;
-		var appImages = obj.appImages || [];
-		var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
+		execute('selectRoute', id, function(err, obj) {
+			console.log('[Cast API]', 'Trying to selectRoute', obj);
 
-		var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+			if(!err && obj.sessionId) {
+				var sessionId = obj.sessionId;
+				var appId = obj.appId;
+				var displayName = obj.displayName;
+				var appImages = obj.appImages || [];
+				var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
 
-		if (obj.media && obj.media.sessionId)
-                {
-                    _currentMedia = new chrome.cast.media.Media(sessionId, obj.media.mediaSessionId);
-                    _currentMedia.currentTime = obj.media.currentTime;
-                    _currentMedia.playerState = obj.media.playerState;
-                    _currentMedia.media = obj.media.media;
-                    session.media[0] = _currentMedia;
-                }
- 
-                _sessionListener && _sessionListener(session);
-            } else {
-                handleError(err, _errorCallback);
-            }
- 
-            resolve();
-	});
-    }
+				var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+
+				if (obj.media && obj.media.sessionId)
+				{
+					_currentMedia = new chrome.cast.media.Media(sessionId, obj.media.mediaSessionId);
+					_currentMedia.currentTime = obj.media.currentTime;
+					_currentMedia.playerState = obj.media.playerState;
+					_currentMedia.media = obj.media.media;
+					session.media[0] = _currentMedia;
+				}
+
+				_sessionListener && _sessionListener(session);
+			} else {
+				handleError(err, _errorCallback);
+			}
+
+			resolve();
+		});
+    });
 }
 
 chrome.cast.getRouteListElement = function() {
