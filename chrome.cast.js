@@ -1034,7 +1034,7 @@ chrome.cast.media.Media.prototype._update = function(isAlive, obj) {
 function createRouteElement(route) {
 	var el = document.createElement('li');
 	el.classList.add('route');
-	el.addEventListener('touchstart', onRouteClick);
+	el.addEventListener('click', onRouteClick);
 	el.textContent = route.name;
 	el.setAttribute('data-routeid', route.id);
 	return el;
