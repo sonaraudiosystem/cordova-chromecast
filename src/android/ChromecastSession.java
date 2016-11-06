@@ -366,15 +366,16 @@ public class ChromecastSession
 	private ResultCallback<Cast.ApplicationConnectionResult> launchApplicationResultCallback = new ResultCallback<Cast.ApplicationConnectionResult>() {
 		@Override
 		public void onResult(ApplicationConnectionResult result) {
-			
-			ApplicationMetadata metadata = result.getApplicationMetadata();
-			ChromecastSession.this.sessionId = result.getSessionId();
-			ChromecastSession.this.displayName = metadata.getName();
-			ChromecastSession.this.appImages = metadata.getImages();
-		
+
 			Status status = result.getStatus();
-			
+
 			if (status.isSuccess()) {
+				ApplicationMetadata metadata = result.getApplicationMetadata();
+				ChromecastSession.this.sessionId = result.getSessionId();
+
+				ChromecastSession.this.displayName = metadata.getName();
+				ChromecastSession.this.appImages = metadata.getImages();
+
 				try {
 					ChromecastSession.this.launchCallback.onSuccess(ChromecastSession.this);
 					connectRemoteMediaPlayer();
