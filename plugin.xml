@@ -32,10 +32,6 @@
       <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     </config-file>
 
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-    </config-file>
-
     <framework src="com.google.android.gms:play-services-gcm:15.0.0" />
     <framework src="com.google.android.gms:play-services-cast:15.0.0" />
     <framework src="com.google.android.gms:play-services-ads:15.0.0" />
