@@ -111,6 +111,12 @@ chrome.cast = {
 	*/
 	isAvailable: false,
 
+	/**
+	* Current Session obtained by Client
+	* @type {Object}
+	*/
+	currentSession = null,
+
 
 	// CLASSES CLASSES CLASSES CLASSES CLASSES CLASSES CLASSES
 
@@ -456,8 +462,6 @@ var _defaultActionPolicy = null;
 var _receiverListener = null;
 var _sessionListener = null;
 
-var currentSession = null;
-
 var _sessions = {};
 var _currentMedia = null;
 var _routeListEl = document.createElement('ul');
@@ -533,7 +537,7 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 			var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
 
 			console.log("--> Getting Session");
-			currentSession = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+			chrome.cast.currentSession = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
 
 			if (obj.media && obj.media.sessionId) {
 				console.log("---> Getting Media");
@@ -544,9 +548,9 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 				session.media[0] = _currentMedia;
 			}
 
-			console.log("--> New Session " + currentSession);
-			successCallback(currentSession);
-			_sessionListener(currentSession); /*Fix - Already has a sessionListener*/
+			console.log("--> New Session " + chrome.cast.currentSession);
+			successCallback(chrome.cast.currentSession);
+			_sessionListener(chrome.cast.currentSession); /*Fix - Already has a sessionListener*/
 		} else {
 			console.log("ERROR ON REQUEST: " + err);
 			handleError(err, errorCallback);
