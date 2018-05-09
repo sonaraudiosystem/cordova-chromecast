@@ -115,7 +115,7 @@ chrome.cast = {
 	* Current Session obtained by Client
 	* @type {Object}
 	*/
-	currentSession = null,
+	currentSession: null,
 
 
 	// CLASSES CLASSES CLASSES CLASSES CLASSES CLASSES CLASSES
