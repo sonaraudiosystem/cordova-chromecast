@@ -456,6 +456,8 @@ var _defaultActionPolicy = null;
 var _receiverListener = null;
 var _sessionListener = null;
 
+var currentSession = null;
+
 var _sessions = {};
 var _currentMedia = null;
 var _routeListEl = document.createElement('ul');
@@ -531,7 +533,7 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 			var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
 
 			console.log("--> Getting Session");
-			var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+			currentSession = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
 
 			if (obj.media && obj.media.sessionId) {
 				console.log("---> Getting Media");
@@ -542,8 +544,8 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 				session.media[0] = _currentMedia;
 			}
 
-			successCallback(session);
-			_sessionListener(session); /*Fix - Already has a sessionListener*/
+			successCallback(currentSession);
+			_sessionListener(currentSession); /*Fix - Already has a sessionListener*/
 		} else {
 			console.log("ERROR ON REQUEST: " + err);
 			handleError(err, errorCallback);
