@@ -544,6 +544,7 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 				session.media[0] = _currentMedia;
 			}
 
+			console.log("--> New Session " + currentSession);
 			successCallback(currentSession);
 			_sessionListener(currentSession); /*Fix - Already has a sessionListener*/
 		} else {
