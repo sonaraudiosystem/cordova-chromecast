@@ -509,6 +509,7 @@ chrome.cast.initialize = function (apiConfig, successCallback, errorCallback) {
 * @param  {chrome.cast.SessionRequest} opt_sessionRequest
 */
 chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessionRequest) {
+	console.log("ChromeCast API is requesting session");
 	if (chrome.cast.isAvailable === false) {
 		errorCallback(new chrome.cast.Error(chrome.cast.ErrorCode.API_NOT_INITIALIZED), 'The API is not initialized.', {});
 		return;
@@ -539,6 +540,7 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 			successCallback(session);
 			_sessionListener(session); /*Fix - Already has a sessionListener*/
 		} else {
+			console.log("ERROR ON REQUEST: " + err);
 			handleError(err, errorCallback);
 		}
 	});
