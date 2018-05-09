@@ -519,17 +519,22 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 		return;
 	}
 
+	console.log("-> Executing RequestSession");
 	execute('requestSession', function (err, obj) {
 		if (!err) {
 			var sessionId = obj.sessionId;
 			var appId = obj.appId;
 			var displayName = obj.displayName;
 			var appImages = obj.appImages || [];
+
+			console.log("--> Initializing Receiver");
 			var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
 
+			console.log("--> Getting Session");
 			var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
 
 			if (obj.media && obj.media.sessionId) {
+				console.log("---> Getting Media");
 				_currentMedia = new chrome.cast.media.Media(sessionId, obj.media.mediaSessionId);
 				_currentMedia.currentTime = obj.media.currentTime;
 				_currentMedia.playerState = obj.media.playerState;
