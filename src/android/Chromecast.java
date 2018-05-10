@@ -213,11 +213,11 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 
 				for (int n = 1; n < routeList.size(); n++) {
 					RouteInfo route = routeList.get(n);
-					//if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
+					if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
 						seq_tmp1.add(route.getName());
 						seq_tmp_cnt_final.add(n);
 						//seq[n-1] = route.getName();
-					//}
+					}
 				}
 
 				CharSequence[] seq;
@@ -609,9 +609,9 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				List<RouteInfo> routeList = mMediaRouter.getRoutes();
 
 				for (RouteInfo route : routeList) {
-					//if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
+					if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
 						sendJavascript("chrome.cast._.routeAdded(" + routeToJSON(route) + ")");
-					//}
+					}
 				}
 			}
 		});
@@ -636,10 +636,10 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				boolean available = false;
 
 				for (RouteInfo route: routeList) {
-					//if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
+					if (!route.getName().equals("Phone") && route.getId().indexOf("Cast") > -1) {
 						available = true;
 						break;
-					//}
+					}
 				}
 				if (available || (Chromecast.this.currentSession != null && Chromecast.this.currentSession.isConnected())) {
 					sendJavascript("chrome.cast._.receiverAvailable()");
