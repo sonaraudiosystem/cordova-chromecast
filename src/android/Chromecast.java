@@ -205,7 +205,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				final List<RouteInfo> routeList = mMediaRouter.getRoutes();
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-				builder.setTitle("Choose a Chromecast");
+				builder.setTitle("Escolha um Chromecast");
 				//CharSequence[] seq = new CharSequence[routeList.size() -1];
 				ArrayList<String> seq_tmp1 = new ArrayList<String>();
 
@@ -223,11 +223,11 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				CharSequence[] seq;
 				seq = seq_tmp1.toArray(new CharSequence[seq_tmp1.size()]);
 
-				builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+				builder.setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						callbackContext.error("cancel");
+						callbackContext.error("cancelar");
 					}
 				});
 
