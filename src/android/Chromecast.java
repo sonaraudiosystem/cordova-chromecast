@@ -609,7 +609,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				List<RouteInfo> routeList = mMediaRouter.getRoutes();
 
 				for (RouteInfo route : routeList) {
-					if (!route.getName().equals("Phone")) {
+					if (!route.getName().equals("Phone") && !route.getName().equals("")) {
 						sendJavascript("chrome.cast._.routeAdded(" + routeToJSON(route) + ")");
 					}
 				}
@@ -677,13 +677,13 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 	 * @param route
 	 */
 	protected void onRouteAdded(MediaRouter router, final RouteInfo route) {
-		if (this.autoConnect && this.currentSession == null && !route.getName().equals("Phone")) {
+		if (this.autoConnect && this.currentSession == null && !route.getName().equals("Phone") && !route.getName().equals("")) {
 			log("Attempting to join route " + route.getName());
 			this.joinSession(route);
 		} else {
 			log("For some reason, not attempting to join route " + route.getName() + ", " + this.currentSession + ", " + this.autoConnect);
 		}
-		if (!route.getName().equals("Phone")) {
+		if (!route.getName().equals("Phone") && !route.getName().equals("")) {
 			sendJavascript("chrome.cast._.routeAdded(" + routeToJSON(route) + ")");
 		}
 		this.checkReceiverAvailable();
@@ -696,7 +696,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 	 */
 	protected void onRouteRemoved(MediaRouter router, RouteInfo route) {
 		this.checkReceiverAvailable();
-		if (!route.getName().equals("Phone")) {
+		if (!route.getName().equals("Phone") && !route.getName().equals("")) {
 			sendJavascript("chrome.cast._.routeRemoved(" + routeToJSON(route) + ")");
 		}
 	}
