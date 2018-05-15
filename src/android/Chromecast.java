@@ -636,6 +636,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				boolean available = false;
 
 				for (RouteInfo route: routeList) {
+					log("checkReceiverAvailable " + route.getName());
 					if (!route.getName().equals("Phone") && route.getName() != null) {
 						available = true;
 						break;
