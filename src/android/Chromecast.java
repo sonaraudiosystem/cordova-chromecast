@@ -213,7 +213,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 
 				for (int n = 1; n < routeList.size(); n++) {
 					RouteInfo route = routeList.get(n);
-					if (!route.getName().equals("Phone")) {
+					if (!route.getName().equals("Phone") && !route.getName().equals("")) {
 						seq_tmp1.add(route.getName());
 						seq_tmp_cnt_final.add(n);
 						//seq[n-1] = route.getName();
@@ -636,7 +636,7 @@ public class Chromecast extends CordovaPlugin implements ChromecastOnMediaUpdate
 				boolean available = false;
 
 				for (RouteInfo route: routeList) {
-					if (!route.getName().equals("Phone")) {
+					if (!route.getName().equals("Phone") && !route.getName().equals("")) {
 						available = true;
 						break;
 					}
