@@ -1,6 +1,6 @@
 {
-  "name": "cordova-chromecast",
-  "version": "0.0.1",
+  "name": "cordova-plugin-chromecast",
+  "version": "0.0.2",
   "description": "Chromecast in Cordova.",
   "main": "index.js",
   "scripts": {
