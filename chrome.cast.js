@@ -1,4 +1,4 @@
-var EventEmitter = require('acidhax.cordova.chromecast.EventEmitter');
+var EventEmitter = require('cordova-plugin-chromecast.EventEmitter');
 
 var chrome = {};
 chrome.cast = {
@@ -464,6 +464,7 @@ var _sessionListener = null;
 
 var _sessions = {};
 var _currentMedia = null;
+var _routeRaw = {};
 var _routeListEl = document.createElement('ul');
 _routeListEl.classList.add('route-list');
 var _routeList = {};
@@ -1080,6 +1081,10 @@ function onRouteClick(target, successCallback, errorCallback) {
 	}
 }
 
+chrome.cast.getRouteRaw = function () {
+  return _routeRaw;
+};
+
 chrome.cast.getRouteListElement = function (successCallback, errorCallback) {
 	var shadow = document.createElement('div');
 	shadow.classList.add('cast-modal-shadow');
@@ -1152,6 +1157,8 @@ chrome.cast._ = {
 	},
 	routeAdded: function (route) {
 		if (!_routeList[route.id]) {
+      _routeRaw[route.id] = route;
+
 			route.el = createRouteElement(route);
 			_routeList[route.id] = route;
 
@@ -1160,6 +1167,8 @@ chrome.cast._ = {
 	},
 	routeRemoved: function (route) {
 		if (_routeList[route.id]) {
+      delete _routeRaw[route.id];
+
 			_routeList[route.id].el.remove();
 			delete _routeList[route.id];
 		}
