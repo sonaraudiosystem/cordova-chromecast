@@ -1,4 +1,4 @@
-package acidhax.cordova.chromecast;
+package com.sonaraudiosystem.chromecast;
 
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;

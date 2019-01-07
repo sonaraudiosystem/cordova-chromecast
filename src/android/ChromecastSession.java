@@ -1,4 +1,4 @@
-package acidhax.cordova.chromecast;
+package com.sonaraudiosystem.chromecast;
 
 import java.io.IOException;
 import java.util.HashSet;

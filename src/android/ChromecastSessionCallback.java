@@ -1,4 +1,4 @@
-package acidhax.cordova.chromecast;
+package com.sonaraudiosystem.chromecast;
 
 public abstract class ChromecastSessionCallback {
 	public void onSuccess() {

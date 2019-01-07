@@ -1,4 +1,4 @@
-package acidhax.cordova.chromecast;
+package com.sonaraudiosystem.chromecast;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package acidhax.cordova.chromecast;
+package com.sonaraudiosystem.chromecast;
 
 public class ChromecastException extends Exception {
 
