@@ -817,7 +817,7 @@ chrome.cast.Session.prototype._update = function (isAlive, obj) {
 		}
 	}
 
-	this.emit('_sessionUpdated', isAlive);
+	this.emit('_sessionUpdated', isAlive, obj); // 2019-01-08
 };
 
 
@@ -1037,7 +1037,7 @@ chrome.cast.media.Media.prototype._update = function (isAlive, obj) {
 
 	this._lastUpdatedTime = Date.now();
 
-	this.emit('_mediaUpdated', isAlive);
+	this.emit('_mediaUpdated', isAlive, obj); // 2019-01-08
 };
 
 
@@ -1081,10 +1081,6 @@ function onRouteClick(target, successCallback, errorCallback) {
 	}
 }
 
-chrome.cast.getRouteRaw = function () {
-  return _routeRaw;
-};
-
 chrome.cast.getRouteListElement = function (successCallback, errorCallback) {
 	var shadow = document.createElement('div');
 	shadow.classList.add('cast-modal-shadow');
@@ -1126,6 +1122,38 @@ chrome.cast.getRouteListElement = function (successCallback, errorCallback) {
 	});
 
 	document.getElementsByTagName('body')[0].appendChild(shadow);
+};
+
+chrome.cast.selectRouteRaw = function (id, successCallback, errorCallback) {
+  if (id) {
+    try {
+      chrome.cast._emitConnecting();
+    } catch (e) {
+      console.error('Error in connectingListener', e);
+    }
+
+    execute('selectRoute', id, function (err, obj) {
+      if (err) {
+        errorCallback(err);
+      }
+
+      var sessionId = obj.sessionId;
+      var appId = obj.appId;
+      var displayName = obj.displayName;
+      var appImages = obj.appImages || [];
+      var receiver = new chrome.cast.Receiver(obj.receiver.label, obj.receiver.friendlyName, obj.receiver.capabilities || [], obj.volume || null);
+
+      var session = _sessions[sessionId] = new chrome.cast.Session(sessionId, appId, displayName, appImages, receiver);
+
+      _sessionListener && _sessionListener(session);
+
+      successCallback(session);
+    });
+  }
+};
+
+chrome.cast.getRouteRaw = function () {
+  return _routeRaw;
 };
 
 
