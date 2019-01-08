@@ -817,7 +817,7 @@ chrome.cast.Session.prototype._update = function (isAlive, obj) {
 		}
 	}
 
-	this.emit('_sessionUpdated', isAlive, obj); // 2019-01-08
+	this.emit('_sessionUpdated', isAlive, this); // 2019-01-08
 };
 
 
@@ -1037,7 +1037,7 @@ chrome.cast.media.Media.prototype._update = function (isAlive, obj) {
 
 	this._lastUpdatedTime = Date.now();
 
-	this.emit('_mediaUpdated', isAlive, obj); // 2019-01-08
+	this.emit('_mediaUpdated', isAlive, this); // 2019-01-08
 };
 
 
